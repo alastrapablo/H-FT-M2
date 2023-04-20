@@ -50,10 +50,10 @@ function buildToDo(todo, index) {
 
   let todoText = document.createElement('span');
   todoText.innerHTML = todo.description;
-  todoText.id = index.toString();
+  todoText.id = index
 
   if (todo.complete) {
-    todoText.classList.add('completeText');
+    todoText.className('completeText');
   }
 
   toDoShell.appendChild(todoText);
@@ -68,7 +68,11 @@ function buildToDo(todo, index) {
 // Devolver el nuevo array
 
 function buildToDos(toDos) {
-  // Tu código acá:
+  const newArray = toDos.map((todo, index) => {
+    const newTodo = buildToDo(todo, index);
+    return newTodo;
+  });
+  return newArray;
 }
 
 // La función 'displayToDos' se va a encargar de que se vean los toDo's en pantalla
@@ -81,20 +85,25 @@ function buildToDos(toDos) {
 //  6) Abrir o en el caso de ya tenerlo abierto, recargar, la página
 
 function displayToDos() {
-  // Tu código acá:
+  let toDoContainer = document.querySelector('#toDoContainer')
+  toDoContainer.innerHTML = ''
+  const arr = buildToDos(toDoItems)
+  for (let i = 0; i < arr.length; i++) {
+    toDoContainer.appendChild(arr[i])
+  }
 }
 
-// La función 'addToDo' agregará un nuevo ToDo al array 'toDoItems'
-// [NOTA: Algunas cuestiones a tener en cuenta sobre el elemento 'input' de HTML (Ya que 'toDoInput' es un input)
-// Todos los elementos input tienen una propiedad llamada 'value' que nos permite acceder al texto que se encuentre
-// actualmente escrito dentro del input]
+/* La función 'addToDo' agregará un nuevo ToDo al array 'toDoItems'
+[NOTA: Algunas cuestiones a tener en cuenta sobre el elemento 'input' de HTML (Ya que 'toDoInput' es un input)
+T odos los elementos input tienen una propiedad llamada 'value' que nos permite acceder al texto que se encuentre
+actualmente escrito dentro del input] */
 //  1) Crear un nuevo ToDo usando la clase ToDo y pasándole el valor del input 'toDoInput' como parámetro
 //  2) Agregar el objeto ToDo recién creado al array toDoItems
 //  3) Setear el valor del input toDoInput como un string vacio ("") (Esto se realiza para que en la vista se borre lo que se encontraba escrito)
 //  4) Llamar a la función displayToDos para que se actualicen los toDos mostrados en pantalla
 
 function addToDo() {
-  // Tu código acá:
+
 
 }
 
@@ -142,8 +151,8 @@ function completeToDo(event) {
 // ********************************************** ----------- ********************************************** //
 
 
-// Acá debes insertar la llamada a 'displayToDos'
 
+// Acá debes insertar la llamada a 'displayToDos'
 
 // ---------------------------- NO CAMBIES NADA DE ACÁ PARA ABAJO ----------------------------- //
 if (typeof module !== 'undefined') {
