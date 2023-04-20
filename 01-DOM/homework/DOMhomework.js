@@ -103,8 +103,10 @@ actualmente escrito dentro del input] */
 //  4) Llamar a la función displayToDos para que se actualicen los toDos mostrados en pantalla
 
 function addToDo() {
-
-
+  let newToDo = new ToDo(toDoInput)
+  toDoItems.push(newToDo)
+  toDoInput = ''
+  displayToDos()
 }
 
 // Agregar un 'Event Listener' para que cada vez que el botón 'AGREGAR' sea clickeado
@@ -112,8 +114,10 @@ function addToDo() {
 //   1) Seleccionar el elemento cuyo id es 'addButton'
 //   2) Agregarle un 'click' event listener, pasándole la función 'addToDo' como callback
 
-// Tu código acá:
-
+const addButton = document.querySelector('#addButton');
+addButton.addEventListener('click', function () {
+  addToDo();
+});
 
 
 // La función completeToDo se va a ejecutar cuando queramos completar un todo
@@ -129,11 +133,12 @@ function addToDo() {
 //      esta función como callback
 
 function completeToDo(event) {
-  // DESCOMENTAR LA SIGUIENTE LINEA
-  //const index = event.target.id;
-  // Tu código acá:
-
+  const index = event.target.id;
+  toDoItems[index].completeToDo(true);
+  toDoItems[index].completed = true;
+  displayToDos();
 }
+
 
 // Una vez que llegaste a este punto verificá que todos los tests pasen
 
