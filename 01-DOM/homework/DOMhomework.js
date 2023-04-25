@@ -8,12 +8,14 @@ let toDoItems = []
 let span = document.querySelector('#createdBy')
 span.innerHTML = 'Aplicación creada por Polchi'
 
-// Crear una clase denominada 'ToDo' cuyo constructor debe recibir un único parámetro del tipo string
-// con el nombre 'description' que será justamente la descripción del ToDo.
-// Agregar dos propiedades a la clase:
-// 1) 'description' : debe ser igual a la descripción pasada como parámetro al constructor
-// 2) 'complete'    : debe setearse en false
-// Ayuda: usar 'this' en el constructor
+/* 
+Crear una clase denominada 'ToDo' cuyo constructor debe recibir un único parámetro del tipo string
+con el nombre 'description' que será justamente la descripción del ToDo.
+Agregar dos propiedades a la clase:
+1) 'description' : debe ser igual a la descripción pasada como parámetro al constructor
+2) 'complete'    : debe setearse en false
+Ayuda: usar 'this' en el constructor
+*/
 
 function ToDo(description) {
   this.description = description;
@@ -44,8 +46,6 @@ ToDo.prototype.completeToDo = function () { this.complete = true };
 //    8) Devolver la variable toDoShell
 
 function buildToDo(todo, index) {
-  // Tu código acá:
-
   // Crear un elemento 'div' y asignárselo a una variable denominada 'toDoShell'
   const toDoShell = document.createElement('div');
   toDoShell.className = 'toDoShell';
@@ -59,12 +59,11 @@ function buildToDo(todo, index) {
   checkbox.className = 'completeCheckbox';
   checkbox.addEventListener('click', completeToDo);
 
-
   // toDoText.addEventListener('click', completeToDo)
   toDoText.innerHTML = todo.description;
 
   // Asignarle como id del 'toDoText' el valor 'index' recibido como argumento
-  // toDoText.id = index;
+  toDoText.id = index;
 
   //    6) En función del atributo 'complete' del objeto ToDo recibido como argumento:
   if (todo.complete) {
@@ -78,7 +77,6 @@ function buildToDo(todo, index) {
 
   // Devolver la variable toDoShell
   return toDoShell;
-
 }
 
 // La función 'buildToDos' debe crear un array de objetos toDo y devolverlo

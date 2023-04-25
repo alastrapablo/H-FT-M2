@@ -1,6 +1,6 @@
 body {
   background-color: rgb(232, 246, 255);
-  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   margin-top: 56px;
   display: flex;
   flex-direction: column;
@@ -93,6 +93,7 @@ body {
 .toDoShell span {
   width: 90%;
 }
+
 .completeText {
   color: lightgrey;
   text-decoration: line-through;
