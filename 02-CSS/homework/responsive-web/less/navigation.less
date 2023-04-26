@@ -1,1 +1,26 @@
 // Código de Nav acá
+.containerHeader {
+    //con mixin
+    // display: flex;
+    // flex-direction: column;
+    // align-items: center;
+    // justify-content: center;
+    .flex(column, center, center);
+    align-content: center;
+    background-color: @nav-bg;
+    border: @nav-border;
+    color: @header-font-color;
+}
+
+.title {
+    font-size: 3.4em;
+    padding: 15px;
+}
+
+.navigation {
+    .flex(column, center, center);
+    align-items: center;
+    gap: 1em;
+    padding-bottom: 1em;
+    font-size: 1.5em;
+}
