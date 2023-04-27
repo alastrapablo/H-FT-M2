@@ -174,15 +174,16 @@ p {
   font-size: 3.4em;
   padding: 15px;
 }
-.nav {
+.navigation {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-direction: row;
   justify-content: center;
-  align-content: center;
-  background-color: #F6F6F6;
-  border: #F1F1F1;
-  color: #23293B;
+  align-items: center;
+  gap: 3em;
+}
+.navigation .divItem {
+  padding-bottom: 1em;
+  font-size: 1.5em;
 }
 footer {
   color: #22283B;
@@ -193,6 +194,10 @@ footer {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.home .intro img {
+  border-radius: 15px;
+  margin: 0.5em;
 }
 .home .intro h2 {
   padding: 15px;
@@ -236,6 +241,20 @@ footer {
 .home .actual .actual-text p {
   margin-bottom: 26px;
 }
+.home .actual .actual-text .btn {
+  background-color: #22283A;
+  color: #F6F7F8;
+  width: fit-content;
+  height: fit-content;
+  padding: 0.7em;
+  border-radius: 0.5em;
+  cursor: pointer;
+}
+.home .actual .actual-text .btn:hover {
+  background-color: #F6F6F6;
+  color: #23293B;
+  border: #22283A solid 0.1em;
+}
 .home .actual .actual-img {
   width: 46%;
   margin-left: 4%;
@@ -244,4 +263,46 @@ footer {
   width: 100%;
   height: auto;
   border-radius: 10px;
+}
+@media (max-width: 500px) {
+  .home .intro img {
+    width: calc(100vw - 18px);
+    margin: 0.2em 0.7em;
+  }
+  .home .music-images .auricular {
+    width: calc(100vw - 18px);
+  }
+  .home .actual {
+    flex-direction: column-reverse;
+    padding: 50px 0px 50px 15px;
+  }
+  .home .actual .actual-text {
+    width: 100%;
+  }
+  .home .actual .actual-text .btn {
+    background-color: #22283A;
+    color: #F6F7F8;
+    width: calc(100vw - 25px);
+    height: fit-content;
+    padding: 0.7em;
+    border-radius: 0.5em;
+    cursor: pointer;
+    width: calc(100vw - 20px);
+    padding: 1.3em;
+    text-align: center;
+    font-size: 1.8m;
+  }
+  .home .actual .actual-text .btn:hover {
+    background-color: #F6F6F6;
+    color: #23293B;
+    border: #22283A solid 0.1em;
+  }
+  .home .actual .actual-img {
+    width: calc(100vw - 25px);
+    margin-left: 0;
+  }
+  .home .tecnologia,
+  .home .ondas {
+    display: none;
+  }
 }

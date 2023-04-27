@@ -5,3 +5,20 @@
     align-items: @align;
     justify-content: @justify;
 }
+
+.botton-mix(@bg-color, @text-color, @width, @height) {
+    background-color: @bg-color;
+    color: @text-color;
+    // width: fit-content;
+    width: @width;
+    height: @height;
+    padding: 0.7em;
+    border-radius: 0.5em;
+    cursor: pointer;
+
+    &:hover {
+        background-color: @wild-sand ;
+        color: @ebony-clay;
+        border: @btn-bg-color solid 0.1em;
+    }
+}
