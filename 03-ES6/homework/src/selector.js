@@ -46,6 +46,8 @@ var selectorTypeMatcher = function (selector) {
   if (selector.charAt(0) === '.') { return 'class' }
   if (selector.includes('.') && selector.charAt(0) !== '.') { return 'tag.class' }
   // for (let i = 0; i < selector.length; i++) { if (selector[i] === '.') return 'tag.class' }
+  if (selector.includes('>')) return 'tag > tag';  // EXTRA
+  if (selector.includes(' ')) return 'tag tag';  // EXTRA
   if (!selector.includes('.') && !selector.includes('#')) { return 'tag' }
 };
 
@@ -76,33 +78,23 @@ var matchFunctionMaker = function (selector) {
     matchFunction = element => element.tagName.toLowerCase() === selector.toLowerCase();
   }
 
-  // return matchFunction; /* Sin el EXTRA */
+  //* EXTRA 1
+  if (selectorType === "tag > tag") matchFunction = element => {
 
-  //EXTRA
-  // Nueva sección de código que maneja los selectores > y espacio en blanco
-  if (selector.includes(">")) {
-    let selectors = selector.split(">");
-    matchFunction = (element, sel) => {
-      let parent = element.parentElement;
-      if (parent && matchFunctionMaker(selectors[1])(element) && matchFunctionMaker(selectors[0])(parent, sel)) {
-        return true;
-      } else { return false }
-    };
-  } else if (selector.includes(" ")) {
-    let selectors = selector.split(" ");
-    matchFunction = (element, sel) => {
-      let ancestor = element.parentElement;
-      while (ancestor) {
-        if (matchFunctionMaker(selectors[1])(element) && matchFunctionMaker(selectors[0])(ancestor, sel)) {
-          return true;
-        }
-        ancestor = ancestor.parentElement;
-      }
-      return false;
-    };
+    let [tagName1, tagName2] = selector.split(' > ');
+
+    if (element.localName === tagName2 && element.parentNode.localName === tagName1) return true
   }
+  //* EXTRA 2
+  if (selectorType === "tag tag") matchFunction = element => {
 
-  return (element) => matchFunction(element, selector);
+    let [tagName1, tagName2] = selector.split(' ');
+
+    if (element.localName === tagName2 && element.closest(tagName1)) return true;
+  }
+  //*
+
+  return matchFunction;
 };
 
 var $ = function (selector) {
