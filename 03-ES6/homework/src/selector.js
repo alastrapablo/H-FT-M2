@@ -11,17 +11,28 @@ var traverseDomAndCollectElements = function (matchFunc, startEl) {
 
   // Itera sobre los nodos hijos del elemento actual y los pasa a la función matchFunc
   // Si matchFunc devuelve true, agrega el elemento al conjunto de resultados
-  for (let i = 0; i < startEl.childNodes.length; i++) {
-    let currentNode = startEl.childNodes[i];
-    if (matchFunc(currentNode)) {
-      resultSet.push(currentNode);
-    }
-
-    // Si el nodo actual tiene hijos, llama recursivamente a la función traverseDomAndCollectElements
-    if (currentNode.childNodes.length > 0) {
-      resultSet = resultSet.concat(traverseDomAndCollectElements(matchFunc, currentNode));
-    }
+  if (matchFunc(startEl)) {
+    resultSet.push(startEl)
   }
+
+  for (let i = 0; i < startEl.children.length; i++) {
+    let resultado = traverseDomAndCollectElements(matchFunc, startEl.children[i])
+
+    resultSet = [...resultSet, ...resultado]
+  }
+
+  // for (let i = 0; i < startEl.childNodes.length; i++) {
+  //   let currentNode = startEl.childNodes[i];
+  //   if (matchFunc(currentNode)) {
+  //     resultSet.push(currentNode);
+  //   }
+
+  //   // Si el nodo actual tiene hijos, llama recursivamente a la función traverseDomAndCollectElements
+  //   if (currentNode.childNodes.length > 0) {
+  //     resultSet = resultSet.concat(traverseDomAndCollectElements(matchFunc, currentNode));
+  //   }
+  // }
+
   return resultSet;
 };
 
@@ -34,6 +45,7 @@ var selectorTypeMatcher = function (selector) {
   if (selector.charAt(0) === '#') { return 'id' }
   if (selector.charAt(0) === '.') { return 'class' }
   if (selector.includes('.') && selector.charAt(0) !== '.') { return 'tag.class' }
+  // for (let i = 0; i < selector.length; i++) { if (selector[i] === '.') return 'tag.class' }
   if (!selector.includes('.') && !selector.includes('#')) { return 'tag' }
 };
 
@@ -46,18 +58,22 @@ var matchFunctionMaker = function (selector) {
   var selectorType = selectorTypeMatcher(selector);
   var matchFunction;
   if (selectorType === "id") {
-    matchFunction = (element) => element.id === selector.slice(1);
-
+    matchFunction = element => element.id === selector.slice(1);
+    // matchFunction = element => `#${element.id}` === selector;
   } else if (selectorType === "class") {
-    matchFunction = (element) => element.classList.contains(selector.slice(1));
-
+    matchFunction = element => element.classList.contains(selector.slice(1));
+    // matchFunction = element => element.classList.contains(selector.substring(1));
+    // matchFunction = element => { for (let i = 0; i < element.classList.length; i++) { if ('.' + element.classList[i] === selector) return true } }
   } else if (selectorType === "tag.class") {
-    var tag = selector.split(".")[0];
-    var className = selector.split(".")[1];
-    matchFunction = (element) => element.tagName.toLowerCase() === tag && element.classList.contains(className);
-
+    matchFunction = element => {
+      let [t, c] = selector.split(".")
+      return matchFunctionMaker(t)(element) && matchFunctionMaker("." + c)(element)
+    }
+    // let t = selector.split(".")[0];
+    // let c = selector.split(".")[1];
+    // matchFunction = element => element.tagName.toLowerCase() === t && element.classList.contains(c);
   } else if (selectorType === "tag") {
-    matchFunction = (element) => element.tagName.toLowerCase() === selector.toLowerCase();
+    matchFunction = element => element.tagName.toLowerCase() === selector.toLowerCase();
   }
 
   return matchFunction;
