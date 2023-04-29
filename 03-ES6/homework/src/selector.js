@@ -76,7 +76,33 @@ var matchFunctionMaker = function (selector) {
     matchFunction = element => element.tagName.toLowerCase() === selector.toLowerCase();
   }
 
-  return matchFunction;
+  // return matchFunction; /* Sin el EXTRA */
+
+  //EXTRA
+  // Nueva sección de código que maneja los selectores > y espacio en blanco
+  if (selector.includes(">")) {
+    let selectors = selector.split(">");
+    matchFunction = (element, sel) => {
+      let parent = element.parentElement;
+      if (parent && matchFunctionMaker(selectors[1])(element) && matchFunctionMaker(selectors[0])(parent, sel)) {
+        return true;
+      } else { return false }
+    };
+  } else if (selector.includes(" ")) {
+    let selectors = selector.split(" ");
+    matchFunction = (element, sel) => {
+      let ancestor = element.parentElement;
+      while (ancestor) {
+        if (matchFunctionMaker(selectors[1])(element) && matchFunctionMaker(selectors[0])(ancestor, sel)) {
+          return true;
+        }
+        ancestor = ancestor.parentElement;
+      }
+      return false;
+    };
+  }
+
+  return (element) => matchFunction(element, selector);
 };
 
 var $ = function (selector) {
