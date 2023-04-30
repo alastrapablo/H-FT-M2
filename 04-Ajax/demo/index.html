@@ -18,9 +18,9 @@
       $.get("https://jsonplaceholder.typicode.com/photos/" + index, function (data) {
         // vanilla javascript
         var img = document.createElement('img');
-        img.src = dataAca.url;
+        img.src = data.url;
         var title = document.createElement('h3');
-        title.textContent = dataAca.title;
+        title.textContent = data.title;
         $('#respuesta').append(img);
         $('#respuesta').append(title);
         index++;
