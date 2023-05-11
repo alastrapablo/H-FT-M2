@@ -37,16 +37,17 @@ Un campo de busqueda (input) que reciba el id de un amigo y un boton "buscar".
 
 $('#search').click(() => {
 
-    let id = $('#input').val()
-    console.log(id);
+    let inputId = $('#input').val()
+    console.log(inputId);
 
-    if (id) {
-        $.get(`${URL}/${id}`, (friend) => {
+    if (inputId) {
+        $.get(`${URL}/${inputId}`, (friend) => {
             // console.log(friend);
             let span = document.querySelector('#amigo')
             span.innerHTML = `${friend.name}`
         });
     }
+    // inputId.innerHTML = ''
 })
 
 /* 3
@@ -56,4 +57,27 @@ Un input que reciba el id de un amigo y un boton "borrar". Al hacer click en
  Por ej: http://localhost:5000/amigos/2 le pediria al servidor el amigo con id = 2
 */
 
+let deleteFriend = () => {
+    let inputId = $('#inputDelete').val()
+    console.log(inputId);
+    let friend
 
+    if (inputId) {
+        $.get(`${URL}/${inputId}`, (f) => {
+            friend = f
+        })
+
+        $.ajax({
+            url: `${URL}/${inputId}`,
+            type: 'DELETE',
+            success: function () {
+                let successMessage = `Tu amigo ${friend.name} fue eliminado correctamente`
+                $('#success').html(successMessage)
+                $('#inputDelete').val('')
+                showFriends()
+            },
+        })
+    }
+}
+
+$('#delete').click(deleteFriend)
